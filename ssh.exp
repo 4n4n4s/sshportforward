@@ -1,0 +1,15 @@
+#!/usr/bin/expect -f
+spawn ssh -fN -L $env(SSH_BIND_ADDRESS):$env(SSH_PORT):$env(SSH_HOST_IP):$env(SSH_HOST_PORT) $env(SSH_USERNAME)@$env(SSH_SERVER_IP) -4 -o ServerAliveInterval=$env(SERVER_ALIVE_INTERVAL) -o ServerAliveCountMax=$env(SERVER_ALIVE_COUNT_MAX)
+
+expect {
+      "yes/no" {
+            send "yes\r"
+            exp_continue
+      }
+      "*assword:" {
+            send $env(SSH_PASSWORD)\r
+            expect "$env(SSH_USERNAME)"
+            send "ls\r"
+            interact
+      }
+}
