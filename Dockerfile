@@ -1,0 +1,23 @@
+FROM alpine:3.11
+EXPOSE 8080
+
+RUN apk add --no-cache openssh-client expect
+
+ENV SSH_PASSWORD password
+ENV SSH_USERNAME username
+ENV SSH_SERVER_IP 127.0.0.1
+
+ENV SSH_BIND_ADDRESS 127.0.0.1
+ENV SSH_PORT 80
+ENV SSH_HOST_IP 0.0.0.0
+ENV SSH_HOST_PORT 8080
+ENV SERVER_ALIVE_INTERVAL 300
+ENV SERVER_ALIVE_COUNT_MAX 0
+
+ENV KEEPALIVE 7d
+
+COPY ssh.exp .
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
