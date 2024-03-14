@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3.19
 EXPOSE 8080
 
 RUN apk add --no-cache openssh-client expect
